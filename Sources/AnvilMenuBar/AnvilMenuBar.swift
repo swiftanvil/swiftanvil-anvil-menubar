@@ -1,5 +1,5 @@
-import SwiftUI
 import Observation
+import SwiftUI
 
 /// An observable model that manages menu bar items and renders them as SwiftUI views.
 ///
@@ -67,7 +67,7 @@ private struct MenuBarContent: View {
     var body: some View {
         ForEach(Array(items.enumerated()), id: \.offset) { _, item in
             switch item {
-            case .button(let label, let systemImage, let action):
+            case let .button(label, systemImage, action):
                 Button {
                     perform(action)
                 } label: {
@@ -87,7 +87,7 @@ private struct MenuBarContent: View {
             case .separator:
                 Divider()
 
-            case .submenu(let label, let subitems):
+            case let .submenu(label, subitems):
                 Menu(label) {
                     MenuBarContent(items: subitems)
                 }
@@ -99,20 +99,20 @@ private struct MenuBarContent: View {
         switch action {
         case .openWindow:
             #if canImport(AppKit)
-            NSApp.activate(ignoringOtherApps: true)
+                NSApp.activate(ignoringOtherApps: true)
             #endif
 
         case .openSettings:
             #if canImport(AppKit)
-            NSApp.sendAction(Selector("showPreferencesWindow:"), to: nil, from: nil)
+                NSApp.sendAction(Selector("showPreferencesWindow:"), to: nil, from: nil)
             #endif
 
         case .quit:
             #if canImport(AppKit)
-            NSApp.terminate(nil)
+                NSApp.terminate(nil)
             #endif
 
-        case .custom(let closure):
+        case let .custom(closure):
             closure()
         }
     }

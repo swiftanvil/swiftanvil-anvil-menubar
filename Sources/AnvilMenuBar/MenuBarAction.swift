@@ -26,10 +26,10 @@ public enum MenuBarAction: Equatable, Sendable {
 
     public static func == (lhs: MenuBarAction, rhs: MenuBarAction) -> Bool {
         switch (lhs, rhs) {
-        case (.openWindow(let a), .openWindow(let b)): return a == b
-        case (.openSettings, .openSettings): return true
-        case (.quit, .quit): return true
-        default: return false
+        case let (.openWindow(a), .openWindow(b)): a == b
+        case (.openSettings, .openSettings): true
+        case (.quit, .quit): true
+        default: false
         }
     }
 }

@@ -4,12 +4,11 @@ import Testing
 
 @Suite("AnvilMenuBar")
 struct AnvilMenuBarTests {
-
     @Test("creates button item")
     func buttonItem() {
         let item = MenuBarItem.button(label: "Open", systemImage: "window", action: .openWindow())
 
-        if case .button(let label, let image, let action) = item {
+        if case let .button(label, image, action) = item {
             #expect(label == "Open")
             #expect(image == "window")
             #expect(action == .openWindow())
@@ -22,7 +21,7 @@ struct AnvilMenuBarTests {
     func toggleItem() {
         let item = MenuBarItem.toggle(label: "Dark Mode", isOn: true)
 
-        if case .toggle(let label, let isOn) = item {
+        if case let .toggle(label, isOn) = item {
             #expect(label == "Dark Mode")
             #expect(isOn == true)
         } else {
@@ -39,10 +38,10 @@ struct AnvilMenuBarTests {
     @Test("creates submenu item")
     func submenuItem() {
         let item = MenuBarItem.submenu(label: "More", items: [
-            .button(label: "About", action: .openSettings),
+            .button(label: "About", action: .openSettings)
         ])
 
-        if case .submenu(let label, let items) = item {
+        if case let .submenu(label, items) = item {
             #expect(label == "More")
             #expect(items.count == 1)
         } else {
@@ -66,7 +65,7 @@ struct AnvilMenuBarTests {
         menuBar.insert(.button(label: "New", action: .quit), at: 0)
 
         #expect(menuBar.items.count == 2)
-        if case .button(let label, _, _) = menuBar.items[0] {
+        if case let .button(label, _, _) = menuBar.items[0] {
             #expect(label == "New")
         } else {
             Issue.record("Expected button at index 0")
@@ -77,7 +76,7 @@ struct AnvilMenuBarTests {
     func dynamicRemove() {
         let menuBar = AnvilMenuBar(items: [
             .button(label: "A", action: .quit),
-            .separator,
+            .separator
         ])
         let removed = menuBar.remove(at: 1)
 
@@ -88,11 +87,11 @@ struct AnvilMenuBarTests {
     @Test("dynamic replace")
     func dynamicReplace() {
         let menuBar = AnvilMenuBar(items: [
-            .button(label: "Old", action: .quit),
+            .button(label: "Old", action: .quit)
         ])
         menuBar.replace(at: 0, with: .button(label: "New", action: .openSettings))
 
-        if case .button(let label, _, _) = menuBar.items[0] {
+        if case let .button(label, _, _) = menuBar.items[0] {
             #expect(label == "New")
         } else {
             Issue.record("Expected replaced button")
@@ -105,7 +104,7 @@ struct AnvilMenuBarTests {
         menuBar.append(.button(label: "End", action: .quit))
 
         #expect(menuBar.items.count == 2)
-        if case .button(let label, _, _) = menuBar.items[1] {
+        if case let .button(label, _, _) = menuBar.items[1] {
             #expect(label == "End")
         } else {
             Issue.record("Expected button at end")
@@ -133,7 +132,7 @@ struct AnvilMenuBarTests {
         let menuBar = AnvilMenuBar(items: [.separator])
         menuBar.insert(.button(label: "First", action: .quit), at: -10)
 
-        if case .button(let label, _, _) = menuBar.items[0] {
+        if case let .button(label, _, _) = menuBar.items[0] {
             #expect(label == "First")
         } else {
             Issue.record("Expected button at index 0")
@@ -146,7 +145,7 @@ struct AnvilMenuBarTests {
         menuBar.insert(.button(label: "Last", action: .quit), at: 100)
 
         #expect(menuBar.items.count == 2)
-        if case .button(let label, _, _) = menuBar.items[1] {
+        if case let .button(label, _, _) = menuBar.items[1] {
             #expect(label == "Last")
         } else {
             Issue.record("Expected button at end")

@@ -6,7 +6,7 @@ let package = Package(
     name: "AnvilMenuBar",
     platforms: [.macOS(.v15)],
     products: [
-        .library(name: "AnvilMenuBar", targets: ["AnvilMenuBar"]),
+        .library(name: "AnvilMenuBar", targets: ["AnvilMenuBar"])
     ],
     targets: [
         .target(
@@ -15,7 +15,7 @@ let package = Package(
         .testTarget(
             name: "AnvilMenuBarTests",
             dependencies: ["AnvilMenuBar"]
-        ),
+        )
     ],
     swiftLanguageModes: [.v6]
 )
